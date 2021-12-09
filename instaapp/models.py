@@ -16,9 +16,9 @@ class Image(models.Model):
      self.save()
 
   @classmethod
-  def display_insta(cls):
-    insta = cls.objects.all().order_by('-posted_at')
-    return insta
+  def display_instaapp(cls):
+    instaapp = cls.objects.all().order_by('-posted_at')
+    return instaapp
 
   @property
   def saved_comments(self):
@@ -29,9 +29,9 @@ class Image(models.Model):
     return self.photolikes.count()
 
   @classmethod
-  def search_insta(cls,search_term):
-    insta = cls.objects.filter(photo_name__icontains = search_term).all()
-    return insta
+  def search_instaapp(cls,search_term):
+    instaapp = cls.objects.filter(photo_name__icontains = search_term).all()
+    return instaapp
 
   def delete_post(self):
     self.delete()
