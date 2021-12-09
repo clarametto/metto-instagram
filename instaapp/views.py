@@ -11,14 +11,13 @@ from .email import send_welcome_email
 from django.core.exceptions import ObjectDoesNotExist
 
 
-@login_required
 def index(request):
   comment_form = CommentsForm()
   post_form = postPhotoForm()
-  insta = Image.display_insta()
+  instaapp = Image.display_instaapp()
   all_users = User.objects.all()
   
-  return render (request,'index.html',{"insta":insta,"comment_form":comment_form,"post":post_form,"all_users":all_users})
+  return render (request,'index.html',{"instaapp":instaapp,"comment_form":comment_form,"post":post_form,"all_users":all_users})
 
 @login_required
 def post(request):
@@ -60,19 +59,19 @@ def register(request):
 def profile(request):
   comment_form = CommentsForm()
   current_user = request.user
-  insta = Image.objects.all().order_by('-posted_at')
+  instaapp = Image.objects.all().order_by('-posted_at')
   all_users = User.objects.all()
-  user_insta = Image.objects.filter(user_id = current_user.id).all()
+  user_instaapp = Image.objects.filter(user_id = current_user.id).all()
   
-  return render(request,'profile/profile.html',{"insta":insta,'all_users':all_users,'comment_form':comment_form,'user_insta':user_insta,"current_user":current_user})
+  return render(request,'profile/profile.html',{"instaapp":instaapp,'all_users':all_users,'comment_form':comment_form,'user_instaapp':user_instaapp,"current_user":current_user})
 
 @login_required
 def search(request):
   if 'search_user' in request.GET and request.GET["search_user"]:
     search_term = request.GET.get('search_user')
     users = Profile.search_profiles(search_term)
-    insta = Image.search_insta(search_term)
-    return render(request,'search.html',{"users":users,"insta":insta})
+    instaapp = Image.search_insta(search_term)
+    return render(request,'search.html',{"users":users,"instaapp":instaapp})
   else:
     return render(request,'search.html')
  
@@ -85,11 +84,11 @@ def allcomments(request,photo_id):
 def users_profile(request,pk):
   comment_form = CommentsForm()
   user = User.objects.get(pk = pk)
-  insta = Image.objects.filter(user = user)
+  instaapp = Image.objects.filter(user = user)
   c_user = request.user
   
   return render(request,'profile/users_profile.html',{"user":user,'comment_form':comment_form,
-"insta":insta,"c_user":c_user})
+"instaapp":instaapp,"c_user":c_user})
 
 @login_required
 def update_profile(request):
