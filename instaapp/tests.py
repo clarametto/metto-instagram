@@ -1,4 +1,6 @@
 from django.test import TestCase
+from .models import Profile, Image, Comment
+from django.contrib.auth.models import User
 
 # Create your tests here.
 class ImageTestClass(TestCase):
@@ -10,7 +12,7 @@ class ImageTestClass(TestCase):
         self.profile = Profile(bio='This is my bio')
         self.profile.save_profile()
         #creating an new image
-        self.image = Image(post='test.jpg',caption='Fun times with bae', posted_on='Monday', profile=self.profile)
+        self.image = Image(post='test.jpg',caption='fun time', posted_on='Monday', profile=self.profile)
     def test_instance(self):
         self.assertTrue(isinstance(self.image, Image))
     def test_save_method(self):
@@ -31,9 +33,9 @@ class ImageTestClass(TestCase):
         Function to test that an image's details can be updated
         """
         self.image.save_img()
-        new_image = Image.objects.filter(caption='Fun times with bae').update(caption='Fun times')
-        images = Image.objects.get(caption='Fun times')
-        self.assertTrue(images.caption, 'Fun times'
+        new_image = Image.objects.filter(caption='Fun time').update(caption='Fun time')
+        images = Image.objects.get(caption='Fun time')
+        self.assertTrue(images.caption, 'Fun time'
         class ProfileTestClass(TestCase):
     """
     Test profile class and its functions
@@ -65,26 +67,60 @@ class ImageTestClass(TestCase):
         profiles = Profile.objects.get(bio='Now this is the real bio')
         self.assertTrue(profiles.bio, 'Now this is the real bio')
         class CommentsTestClass(TestCase):
+    class ImageTestClass(TestCase):
     """
-    Test Comments class and its functions
+    Test Image class and its functions
+    """
+    def setUp(self):
+        #creating an new profile and saving it
+        self.profile = Profile(bio='This is my bio')
+        self.profile.save_profile()
+        #creating an new image
+        self.image = Image(post='test.jpg',caption='Fun time', posted_on='Monday', profile=self.profile)
+    def test_instance(self):
+        self.assertTrue(isinstance(self.image, Image))
+    def test_save_method(self):
+        """
+        Function to test that image is being saved
+        """
+        self.image.save_img()
+        images = Image.objects.all()
+        self.assertTrue(len(images) > 0)
+    def test_delete_method(self):
+        """
+        Function to test that an image can be deleted
+        """
+        self.image.save_img()
+        self.image.del_img()
+    def test_update_method(self):
+        """
+        Function to test that an image's details can be updated
+        """
+        self.image.save_img()
+        new_image = Image.objects.filter(caption='Fun time').update(caption='Fun time')
+        images = Image.objects.get(caption='Fun time')
+        self.assertTrue(images.caption, 'Fun time')
+class CommentTestClass(TestCase):
+    """
+    Test Comment class and its functions
     """
     def setUp(self):
          #creating an new profile and saving it
         self.profile = Profile(bio='This is my bio')
         self.profile.save_profile()
         #creating an new image and saving it
-        self.image = Image(post='test.jpg',caption='Fun times with bae', posted_on='Monday', profile=self.profile)
+        self.image = Image(post='test.jpg',caption='Fun time', posted_on='Monday', profile=self.profile)
         self.image.save_img()
         #creating a new comment and saving it
-        self.comm = Comments(comment='lol', posted_on='Monday', image=self.image)
+        self.comm = Comment(comment='lol', posted_on='Monday', image=self.image)
     def test_instance(self):
-        self.assertTrue(isinstance(self.comm, Comments))
+        self.assertTrue(isinstance(self.comm, Comment))
     def test_save_method(self):
         """
         Function to test that a comment is being saved
         """
         self.comm.save_comm()
-        feedback = Comments.objects.all()
+        feedback = Comment.objects.all()
         self.assertTrue(len(feedback) > 0)
     def test_delete_method(self):
         """
@@ -98,5 +134,5 @@ class ImageTestClass(TestCase):
         """
         self.comm.save_comm()
         this_comm= self.comm.get_comments_by_image_id(self.comm.image_id)
-        comments = Comments.objects.get(id=self.comm.image_id)
-        self.assertTrue(this_comm, comments)
+        comments = Comment.objects.get(id=self.comm.image_id)
+        self.assertTrue(this_comm, comment)
