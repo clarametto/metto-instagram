@@ -1,0 +1,40 @@
+{%extends "registration/base.html"%}
+{% load bootstrap4 %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      {% if form.errors %}
+      <h6> Information Might be Incorrect </h6>
+      {% endif %}
+      <div class="panel panel-default">
+        <h6 class="text-center">Sign up to see photos and videos from your friends.</h6>
+        <div class="form-group" >
+          <button class="btn btn-dark"  style="padding: 3px 5px; font-size: 20px; border-radius: 5px; border-width: thin; width: 100%;" type="">
+             Log in With Facebook</button>
+        </div>
+
+        <div class="panel-body">
+          <form action="/accounts/register/" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <div class="form-group" >
+              <button class="btn btn-dark" style="padding: 3px 5px; font-size: 20px; border-radius: 5px; border-width: thin; width: 100%;" type="submit">Sign Up</button>
+            </div>
+            <input type="hidden" name="next" value="{{next}}">
+          </form>
+          <div class="border-top pt-3">
+            <small class="text-muted">Already have an account ? <a href="{% url 'login' %}" class="ml-2">login</a></small>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-md-3"></div>
+  </div>
+</div>
+
+{% endblock %}
