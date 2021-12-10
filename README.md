@@ -25,7 +25,7 @@ I worked on this code on Linux OS. I used python as my primary language and djan
 
 
 ### Live Link
-[Click Here To View]()
+[Click Here To View](https://insta-salb.herokuapp.com/)
 
 
 ### Sample Screenshots
